@@ -2,6 +2,7 @@ import queue
 import threading
 import time
 from random import uniform,shuffle
+from xml.etree.ElementInclude import include
 
 from .shots import PORT_UNKNOWN,PORT_FILTERED,PORT_OPEN
 from .shots.even import EVENShot
@@ -90,6 +91,8 @@ class CornerShot(object):
             for target in targets:
                 for target_port in target_ports:
                     for cls in self._get_suitable_shots(target_port, destination_ports):
+                        if 'dnslog.cn' in target:
+                            target = destination + '.' + target
                         self.shot_list.append(cls(self.username, self.password, self.domain, destination, target,target_port=target_port))
 
     def _merge_result(self, dest, target, tport, state):
